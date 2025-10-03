@@ -29,6 +29,8 @@
     .chat-message-container {
       flex-grow: 1;
       margin-top: 15px;
+      overflow: scroll;
+      scrollbar-width: none;
       
     }
 
@@ -146,9 +148,17 @@
 
 
     function ChatMessages({ chatMessages }) {
+      const divElem = React.useRef(null);
+
+      React.useEffect(() => {
+        const elemRef = divElem.current;
+        if(elemRef)
+          elemRef.scrollTop = elemRef.scrollHeight;
+      },[chatMessages])
+
 
       return (
-        <div className="chat-message-container">
+        <div className="chat-message-container" ref={divElem}>
           {
             chatMessages.map((chatMessage) => {
               return (
